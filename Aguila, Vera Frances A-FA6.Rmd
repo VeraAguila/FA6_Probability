@@ -1,0 +1,123 @@
+---
+title: "Formative Assessment 6"
+author: "Vera Aguila"
+date: "2024-02-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I. **Geometric Distribution.** Provide an R code for the geometric distribution. The geometric distribution is a probability distribution that models the number of trials required to achieve the first success in a sequence of Bernoulli trials, where each trial has a constant probability of success.
+
+1. Set the probability of success:  p <- 0.2
+
+```{r gd1}
+ p <- 0.2
+```
+
+2. Generate 1000 random variables from the geometric distribution.
+
+```{r gd2}
+ n <- 1000 
+ k <- rgeom(n, p)
+```
+
+3. Calculate some basic statistics:
+
+mean_x <- mean(x)
+
+var_x <- var(x)
+
+sd_x <- sd(x)
+
+```{r gd3}
+ tofirstsuccess <- k+1
+ mean_x <- mean(tofirstsuccess)
+ var_x <- var(tofirstsuccess)
+ sd_x <- sd(tofirstsuccess)
+```
+
+4. Print the results in item 3 with the following output (string):
+
+Number of trials required to achieve first success:
+
+Mean (in 2 decimal places):
+
+Variance (in 2 decimal places):
+
+Standard deviation ( in 2 decimal places):
+
+```{r gd4, echo=FALSE}
+ cat("Number of trials required to achieve first success:",k,"\n")
+ cat("Mean (in 2 decimal places): ", sprintf("%.2f", mean_x), "\n", sep="")
+ cat("Variance (in 2 decimal places): ", sprintf("%.2f", var_x), "\n", sep="")
+ cat("Standard deviation ( in 2 decimal places): ", sprintf("%.2f", sd_x), "\n", sep="")
+```
+
+5. Plot the histogram of the results.
+
+The red line represents the mean.
+
+```{r gd5}
+hist(k, breaks = 20, col = "#f29b9b", main = "Histogram of Geometric Distribution", xlab = "Number of Trials", ylab = "Frequency")
+abline(v = mean_x, col='red', lwd = 3)
+```
+
+
+
+II. **Hypergeometric Distribution.**  Consider a plant manufacturing IC chips of which 10% are expected to be defective. The chips are packed in boxes for export. Before transportation, a sample is drawn from each box. Estimate the probability that the sample contains more than 10% defectives, when:
+
+proportion of successes = p = 0.10
+
+1. A sample of 10 is selected from a box of 40;
+
+total number = N = 40
+<br>number chosen = n = 10
+```{r hgd1}
+x <- 2:4
+k <- dhyper(x, 4, 36, 10)
+k
+sum(k)
+plot(x, dhyper(x, 4, 36, 10),
+xlab = "Number of defective", type = "h",
+ylab = "P(X = x)",
+main = "N = 40, M = 4, n = 10", font.main = 1)
+phyper(4, 4, 36, 10)
+
+plot(x, phyper(x, 4, 36, 10),
+xlab = "Number of defective", type = "s",
+ylab = "P(X <= x)",
+main = "N = 40, M = 4, n = 10", font.main =1)
+
+```
+
+2. A sample of 10 is selected from a box of 5000.
+
+total number = N = 5000
+<br>number chosen = n = 10
+
+```{r hgd2}
+
+p <- 0.1
+N = 5000
+n = 10
+def_n = N*p
+x <- 2:n
+k <- dhyper(x, def_n, N-def_n, n)
+k
+sum(k)
+
+plot(x, k,
+xlab = "Number of defective", type = "h",
+ylab = "P(X = x)",
+main = "N = 5000, M = 4500, n = 10", font.main = 1)
+phyper(4, 4, 36, 10)
+
+plot(x, phyper(x, def_n, N-def_n, n),
+xlab = "Number of defective", type = "s",
+ylab = "P(X <= x)",
+main = "N = 5000, M = 500, n = 10", font.main =1)
+
+```
